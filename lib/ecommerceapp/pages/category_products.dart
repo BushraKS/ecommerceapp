@@ -52,18 +52,18 @@ class _CategoryProductsState extends State<CategoryProducts> {
                             borderRadius: BorderRadius.circular(10.0),
                             child: Image.network(
                               doc["Image"],
-                              height: 150.0,
+                              height: 180.0,
                               width: 220.0,
                               fit: BoxFit.cover,
                             ),
                           ),
                           SizedBox(
-                            height: 5.0,
+                            height: 15.0,
                           ),
                           Text(
                                 doc["Product"],
                                 style: AppWidget.semiboldTextStyle()
-                                    .copyWith(fontSize: 10.0),
+                                    .copyWith(fontSize: 11.0,),
                               ),
                               Spacer(),
                               Text("Rs "+doc["Price"],style: AppWidget.semiboldTextStyle()

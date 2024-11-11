@@ -38,14 +38,32 @@ class _HomeState extends State<Home> {
     setState(() {});
   }
 
+  getListOnLoad() {
+    DatabaseMethods().search("a").then((QuerySnapshot docs) {
+      print(docs.docs.length);
+      productListSize = docs.docs.length;
+      for (int i = 0; i < productListSize; i++) {
+        queryResultSet.add(docs.docs[i].data());
+      }
+      queryResultSet.forEach((element) {
+        setState(() {
+          customList.add(element);
+        });
+      });
+    });
+  }
+
   @override
   void initState() {
     getOntheLoad();
+    getListOnLoad();
     super.initState();
   }
 
   var queryResultSet = [];
   var tempSearchStore = [];
+  var customList = [];
+  var productListSize;
   bool search = false;
 
   initiateSearch(String value) {
@@ -61,21 +79,27 @@ class _HomeState extends State<Home> {
     if (queryResultSet.isEmpty && value.length == 1) {
       DatabaseMethods().search(value).then((QuerySnapshot docs) {
         print(docs.docs.length);
-        for (int i = 0; i < docs.docs.length; i++) {
+        productListSize = docs.docs.length;
+        for (int i = 0; i < productListSize; i++) {
           queryResultSet.add(docs.docs[i].data());
         }
         queryResultSet.forEach((element) {
-          //String str = element['UpdateName'];
-          setState(() {
-            tempSearchStore.add(element);
-          });
+          String str = element['SearchKey'];
+
+          if (str.startsWith(str)) {
+            setState(() {
+              tempSearchStore.add(element);
+            });
+          }
         });
       });
     } else {
       tempSearchStore = [];
       queryResultSet.forEach((element) {
         String str = element['UpdateName'];
-        if (str.startsWith(capitalizedValue)) {
+
+        if (str.startsWith(capitalizedValue) ||
+            str.contains(capitalizedValue)) {
           setState(() {
             tempSearchStore.add(element);
           });
@@ -103,7 +127,7 @@ class _HomeState extends State<Home> {
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Hi, " + name!,
+                                    Text("Hi, " + name!.toUpperCase(),
                                         style: AppWidget.boldTextStyle()),
                                     Text(
                                       "Good morning",
@@ -220,183 +244,10 @@ class _HomeState extends State<Home> {
                                       ]),
                                   SizedBox(height: 10.0),
                                   SizedBox(
-                                      height: 220,
-                                      child: ListView(
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.horizontal,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {},
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                              ),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 15.0,
-                                                  vertical: 15.0),
-                                              margin:
-                                                  EdgeInsets.only(right: 10.0),
-                                              child: Column(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/ecommerce-images/headphone2.png",
-                                                    height: 100.0,
-                                                    width: 120.0,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  SizedBox(height: 5.0),
-                                                  Text(
-                                                    "Headphone",
-                                                    style: AppWidget
-                                                            .semiboldTextStyle()
-                                                        .copyWith(
-                                                            fontSize: 14.0),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 20.0,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        "Rs 3000",
-                                                        style: AppWidget
-                                                            .lightTextStyle(),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 45.0,
-                                                      ),
-                                                      Container(
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.amber,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        6.0)),
-                                                        child: Icon(Icons.add,
-                                                            color:
-                                                                Colors.white),
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15.0,
-                                                vertical: 15.0),
-                                            margin:
-                                                EdgeInsets.only(right: 10.0),
-                                            child: Column(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/ecommerce-images/laptop2.png",
-                                                  height: 100.0,
-                                                  width: 120.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                SizedBox(height: 5.0),
-                                                Text(
-                                                  "Laptop",
-                                                  style: AppWidget
-                                                          .semiboldTextStyle()
-                                                      .copyWith(fontSize: 14.0),
-                                                ),
-                                                SizedBox(
-                                                  height: 20.0,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      "Rs 20000",
-                                                      style: AppWidget
-                                                          .lightTextStyle(),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 45.0,
-                                                    ),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.amber,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      6.0)),
-                                                      child: Icon(Icons.add,
-                                                          color: Colors.white),
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15.0,
-                                                vertical: 15.0),
-                                            margin:
-                                                EdgeInsets.only(right: 10.0),
-                                            child: Column(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/ecommerce-images/watch2.png",
-                                                  height: 100.0,
-                                                  width: 120.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                SizedBox(height: 5.0),
-                                                Text(
-                                                  "Watch",
-                                                  style: AppWidget
-                                                          .semiboldTextStyle()
-                                                      .copyWith(fontSize: 14.0),
-                                                ),
-                                                SizedBox(
-                                                  height: 20.0,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      "Rs 8000",
-                                                      style: AppWidget
-                                                          .lightTextStyle(),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 45.0,
-                                                    ),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.amber,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      6.0)),
-                                                      child: GestureDetector(
-                                                          onTap: () {},
-                                                          child: Icon(Icons.add,
-                                                              color: Colors
-                                                                  .white)),
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      )),
+                                    height: 300,
+                                    child: getCustomList(),
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
                                 ],
                               ),
                       ],
@@ -420,6 +271,63 @@ class _HomeState extends State<Home> {
               fit: BoxFit.cover,
             ),
             Text(element['UpdateName']),
+          ],
+        ));
+  }
+
+  getCustomList() {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      itemCount: customList.length,
+      itemBuilder: (context, index) {
+        var el = customList.map((element) {
+          return buildCustomListItem(element);
+        }).toList();
+        return el[index];
+      },
+    );
+  }
+
+  buildCustomListItem(element) {
+    return Container(
+        padding: EdgeInsets.all(5.0),
+        margin: EdgeInsets.only(right: 5.0),
+        width: 150,
+        height: 150,
+        child: Column(
+          children: [
+            Image.network(
+              element["Image"],
+              width: 100.0,
+              height: 100.0,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 10.0,),
+            Text(
+              element['UpdateName'],
+              style: AppWidget.semiboldTextStyle().copyWith(fontSize: 12.0),
+            ),
+            SizedBox(height: 10.0,),
+            GestureDetector(
+              onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductDetails(name: element["Product"],price: element["Price"], image: element["Image"],details: element["Details"],))),
+              child: Container(
+                                width: 100,
+                                padding: EdgeInsets.symmetric(vertical: 5.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: Center(
+                                    child: Text(
+                                  "Buy Now",
+                                  style: TextStyle(
+                                      fontSize: 10.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+            )
           ],
         ));
   }

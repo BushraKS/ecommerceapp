@@ -31,10 +31,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      //home: Signup(), 
+      home: Signup(), 
       //home: AdminLogin(),
       //home: AddProduct(),
-      home: BottomNav(),
+      //home: BottomNav(),
     );
   }
 }

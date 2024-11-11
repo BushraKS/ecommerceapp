@@ -30,7 +30,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.network(
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                         widget.image,
                         height: MediaQuery.of(context).size.width*0.7),
                   )),
@@ -42,7 +42,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       child: Container(
                         padding: EdgeInsets.all(5.0),
                         decoration: BoxDecoration(
-                            border: Border.all(width: 2.0), shape: BoxShape.circle),
+                            border: Border.all(width: 1.0), shape: BoxShape.circle),
                         child: Icon(Icons.arrow_back_ios_new_outlined,weight: 900, color: Colors.black,),
                       ),
                     ),
@@ -51,7 +51,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               Expanded(
                   child: Container(
-                padding: EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0),
+                padding: EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -77,7 +77,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                       SizedBox(
-                        height: 5.0,
+                        height: 8.0,
                       ),
                       Text("Details",
                           style: AppWidget.lightTextStyle()
@@ -91,7 +91,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.3, bottom: 10.0),
+                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.3),
                               padding: EdgeInsets.symmetric(vertical: 10.0),
                               decoration: BoxDecoration(
                                 color: Colors.amber,
